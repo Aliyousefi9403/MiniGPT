@@ -64,7 +64,10 @@ class BPETokenizer:
         pass costs O(total symbols in distinct chunks), not O(len(text)).
         """
         chunk_counts = Counter(pretokenize(text))
-        alphabet = sorted({ch for chunk in chunk_counts for ch in chunk})
+        # digits are always in the alphabet, even if the training text has none
+        # (the Shahnameh has none: without this, every canary secret would
+        # encode to the same <unk> tokens)
+        alphabet = sorted({ch for chunk in chunk_counts for ch in chunk} | set(DIGITS))
         vocab = [UNK] + alphabet
         words = {w: list(w) for w in chunk_counts}  # chunk -> current symbols
         merges: list[tuple[str, str]] = []

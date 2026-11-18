@@ -40,3 +40,11 @@ def test_save_load(tmp_path):
     tok.save(tmp_path / "t.json")
     tok2 = BPETokenizer.load(tmp_path / "t.json")
     assert tok2.encode(TEXT) == tok.encode(TEXT)
+
+
+def test_digits_encode_even_if_absent_from_training_text():
+    tok = BPETokenizer.train(TEXT, vocab_size=120)
+    assert "۴" not in TEXT
+    ids = tok.encode("۴۸۱۵۹ 2026")
+    assert tok.stoi["<unk>"] not in ids
+    assert tok.decode(ids) == "۴۸۱۵۹ 2026"
