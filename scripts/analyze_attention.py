@@ -118,13 +118,24 @@ def ablation(model, tok, sections, split, sep, word_start) -> dict:
                 x[..., h * D : (h + 1) * D] = 0  # this head's contribution to W_O input
                 return (x,)
             hook = model.blocks[l].attn.proj.register_forward_pre_hook(pre)
-        r_sum, r_n, o_sum, o_n = 0.0, 0, 0.0, 0
-        for ids, rp in zip(seqs, rhyme_pos):
-            x = torch.tensor([ids])
-            lp = torch.log_softmax(model(x[:, :-1])["logits"][0], -1)
-            tok_nll = -lp.gather(-1, x[0, 1:, None]).squeeze(-1)  # position t predicts token t+1
-            r_sum += tok_nll[rp - 1].item(); r_n += 1
-            o_sum += tok_nll.sum().item() - tok_nll[rp - 1].item(); o_n += len(tok_nll) - 1
+        r_sum, o_sum, o_n = 0.0, 0.0, 0
+        for b in range(0, len(seqs), 256):  # right-padded batches; padding is masked out below
+            chunk, rps = seqs[b : b + 256], rhyme_pos[b : b + 256]
+            T = max(len(q) for q in chunk)
+            x = torch.zeros(len(chunk), T, dtype=torch.long)
+            valid = torch.zeros(len(chunk), T - 1, dtype=torch.bool)
+            for j, q in enumerate(chunk):
+                x[j, : len(q)] = torch.tensor(q)
+                valid[j, : len(q) - 1] = True
+            lp = torch.log_softmax(model(x[:, :-1], fast=True)["logits"], -1)
+            tok_nll = -lp.gather(-1, x[:, 1:, None]).squeeze(-1)  # position t predicts token t+1
+            is_rhyme = torch.zeros_like(valid)
+            is_rhyme[torch.arange(len(chunk)), torch.tensor(rps) - 1] = True
+            r_sum += tok_nll[is_rhyme].sum().item()
+            other = valid & ~is_rhyme
+            o_sum += tok_nll[other].sum().item()
+            o_n += int(other.sum())
+        r_n = len(seqs)
         if hook:
             hook.remove()
         return r_sum / r_n, o_sum / o_n
