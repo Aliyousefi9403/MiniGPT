@@ -102,6 +102,8 @@ def main() -> None:
 
     val_ids = tok.encode(val_text)
     for ck in sorted(ART.glob("*.pt")):
+        if not (RES / f"train_{ck.stem}.json").exists():
+            continue  # unfinished run
         model = load_model(str(ck))
         b = gpt_bpc(model, val_ids, len(val_text))
         res["bpc"][f"GPT {ck.stem}"] = b

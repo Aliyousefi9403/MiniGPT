@@ -240,7 +240,8 @@ def attention_heads():
     r = load("attention.json")
     if not r:
         return
-    M = np.array(r["share_on_first_rhyme_word"])
+    q = r["queries"]["predict_rhyme"]
+    M = np.array(q["share_on_first_rhyme_word"])
     fig, ax = plt.subplots(figsize=(6.4, 2.8))
     im = ax.imshow(M, cmap="Blues", vmin=0, vmax=max(0.3, M.max()), aspect="auto")
     for i in range(M.shape[0]):
@@ -250,15 +251,68 @@ def attention_heads():
     ax.set_xticks(range(M.shape[1]), [f"h{j}" for j in range(M.shape[1])])
     ax.set_yticks(range(M.shape[0]), [f"layer {i}" for i in range(M.shape[0])])
     ax.grid(False)
-    ax.set_title(f"Attention from the couplet's last token to the first rhyme word\n(uniform attention would give {r['uniform_baseline']:.2f})",
+    ax.set_title(f"Attention to the first hemistich's rhyme word, from the token that predicts the second rhyme\n(uniform attention would give {q['uniform_baseline']:.2f})",
                  fontsize=10)
     cb = fig.colorbar(im, ax=ax, fraction=0.03, pad=0.01)
     cb.outline.set_visible(False)
     save(fig, "rhyme_heads.png")
 
 
+def dynamics():
+    r = load("dynamics.json")
+    if not r:
+        return
+    snaps = r["snapshots"]
+    ep = [x["epochs"] for x in snaps]
+    reps = sorted({c["reps"] for c in snaps[0]["traps"]})
+    blues = ["#b7d0f0", "#86b0e6", "#4f8ddb", "#2a78d6", "#174a8c"]  # sequential: more reps = darker
+    fig, axes = plt.subplots(1, 3, figsize=(13, 3.8))
+    for ax, L in zip(axes[:2], (1, 4)):
+        for col, rr in zip(blues, reps):
+            a = [next(c["ratio"] for c in x["traps"] if c["n_couplets"] == L and c["kind"] == "exact" and c["reps"] == rr)
+                 for x in snaps]
+            ax.plot(ep, a, "-o", color=col, ms=5, mec="white", mew=1, label=f"inserted ×{rr}")
+        ax.axhline(0.5, color=MUTED, lw=1)
+        ax.set_xscale("log", base=2)
+        ax.set_xlabel("epochs of training (snapshot)")
+        ax.set_ylim(0.3, 1.02)
+        ax.set_title(f"{L}-couplet exact traps")
+    axes[0].set_ylabel("AUC (reference-ratio attack)")
+    axes[0].legend(fontsize=7.5, loc="lower right")
+    ax = axes[2]
+    for col, (L, kind, mk) in zip(C, [(1, "exact", "o"), (1, "fuzzy", "s"), (4, "exact", "o"), (4, "fuzzy", "s")]):
+        pts = sorted((c["exposures"], c["ratio"]) for x in snaps for c in x["traps"] if c["n_couplets"] == L and c["kind"] == kind)
+        ax.scatter([p[0] for p in pts], [p[1] for p in pts], s=22, marker=mk, color=col, edgecolor="white", lw=0.6,
+                   label=f"{L}-couplet, {kind}", zorder=3)
+    ax.axhline(0.5, color=MUTED, lw=1)
+    ax.set_xscale("log")
+    ax.set_xlabel("exposures = insertions × epochs")
+    ax.set_ylim(0.3, 1.02)
+    ax.set_title("All cells against total exposures")
+    ax.legend(fontsize=7.5, loc="lower right")
+    fig.suptitle("Memorisation during training: when do traps become detectable?", x=0.01, ha="left",
+                 fontsize=11, fontweight="bold", color=INK, y=1.03)
+    save(fig, "dynamics_traps.png")
+
+    fig, axes = plt.subplots(1, 2, figsize=(10, 3.5))
+    axes[0].plot(ep, [x["train_loss"] for x in snaps], "-o", color=C[0], ms=5, mec="white", label="training data (A + traps)")
+    axes[0].plot(ep, [x["val_loss"] for x in snaps], "-o", color=C[1], ms=5, mec="white", label="validation (V)")
+    axes[0].set_ylabel("loss (nats / token)")
+    axes[0].set_title("Generalisation gap opens")
+    for col, a in ((C[0], "loss"), (C[2], "ratio")):
+        axes[1].plot(ep, [x["natural"][a] for x in snaps], "-o", color=col, ms=5, mec="white", label=ATTACK_NAMES[a])
+    axes[1].axhline(0.5, color=MUTED, lw=1)
+    axes[1].set_ylabel("AUC, real couplets A vs H")
+    axes[1].set_title("…and membership of real text becomes visible")
+    for ax in axes:
+        ax.set_xscale("log", base=2)
+        ax.set_xlabel("epochs of training (snapshot)")
+        ax.legend(fontsize=8)
+    save(fig, "dynamics_natural.png")
+
+
 def main():
-    for f in (training_curves, bpc_bars, verse_bars, traps_figure, attacks_heatmap, natural_roc, documents, canaries, attention_heads):
+    for f in (training_curves, bpc_bars, verse_bars, traps_figure, attacks_heatmap, natural_roc, documents, canaries, attention_heads, dynamics):
         f()
 
 
