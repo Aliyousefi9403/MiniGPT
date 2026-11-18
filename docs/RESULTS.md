@@ -92,6 +92,35 @@ Sample output (unedited, first lines of `results/samples.json`):
 them…”: the vocabulary and the formulae, e.g. *chonin goft pas shahriyar*,
 “thus then spoke the king”, are the epic's; the sense drifts.)
 
+### 1.3 Positional encodings
+
+Same model and recipe, trained on the clean reference corpus for 2,000 steps
+(`scripts/train_all.sh`, ~18 min each), one seed per variant:
+
+![positional encodings](../figures/pos_ablation.png)
+
+| positional information | best val loss | bits / char |
+|---|---|---|
+| learned table (used for all other models) | 3.417 | 1.719 |
+| sinusoidal, token embeddings × √d | **3.409** | **1.717** |
+| none: position only through the causal mask | 3.602 | 1.814 |
+| sinusoidal, *without* embedding scaling (first attempt) | 4.916 | 2.492 |
+
+* **Learned and sinusoidal tie** (difference 0.008 nats, well within what
+  a different seed would change). I kept the learned table for the main
+  models, the GPT-2 choice, because it needs no extra scaling convention.
+* **No positional encoding works surprisingly well**, only 5.5% worse in
+  bits per character. A causal model can infer position on its own, e.g. by
+  how attention spreads over the visible prefix, which agrees with Haviv et
+  al. (2022, "Transformer language models without positional encodings still
+  learn positional information").
+* **My first sinusoidal run was a bug, kept as a result.** Without the √d
+  scaling of the original Transformer, each fixed table row has norm ≈ 11
+  while a token embedding starts at ≈ 0.25. Position drowned out token
+  identity by a factor of ~44, and the model never recovered within the
+  budget (4.92, worse than no positions at all). It is a concrete
+  illustration of why that "unexplained" √d factor is in Vaswani et al.
+
 ## 2. Inside the model
 
 ### 2.1 Two attention heads implement rhyme
@@ -357,7 +386,8 @@ What this shows:
   fix. (2) The bag-of-words blind baseline originally scored 0.585 because of
   section leakage across folds; it now uses section-grouped folds (0.512).
   (3) An early version of the demo flagged a never-planted trap as a member
-  (see the previous point).
+  (see the previous point). (4) The sinusoidal positional encoding was first
+  added without scaling the embeddings, which wrecked that ablation (§1.3).
 * **The perplexity analysis (E5) is uninformative.** Splitting traps by their
   reference-model perplexity, as Meeus et al. do, gives AUC 1.0 in every
   tercile because of saturation.

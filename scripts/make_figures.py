@@ -72,7 +72,7 @@ def bpc_bars():
         return
     items = list(r["bpc"].items())
     ngram = [(k, v) for k, v in items if "gram" in k]
-    gpt = [(k, v) for k, v in items if k.startswith("GPT") and not k.startswith("GPT pos_")]
+    gpt = [(k, v) for k, v in items if k in ("GPT reference", "GPT target")]
     rows = ngram + gpt
     fig, ax = plt.subplots(figsize=(7, 3.4))
     cols = [MUTED if "gram" in k else C[0] for k, _ in rows]
@@ -312,8 +312,26 @@ def dynamics():
     save(fig, "dynamics_natural.png")
 
 
+def pos_ablation():
+    runs = [("learned", "learned table"), ("sinusoidal", "sinusoidal, embeddings × √d"),
+            ("none", "none (causal mask only)"), ("sinusoidal_unscaled", "sinusoidal, unscaled (bug)")]
+    runs = [(load(f"train_pos_{k}.json"), lab) for k, lab in runs]
+    if not all(r for r, _ in runs):
+        return
+    fig, ax = plt.subplots(figsize=(6.6, 3.5))
+    for col, (r, lab) in zip([C[0], C[2], C[1], MUTED], runs):
+        h = r["history"]
+        ax.plot(h["step"][1:], h["val_loss"][1:], color=col, label=f"{lab}: {r['best_val_loss']:.3f}",
+                ls="--" if "bug" in lab else "-")
+    ax.set_xlabel("optimiser step")
+    ax.set_ylabel("validation loss (nats / token)")
+    ax.set_title("Positional encodings (reference corpus, 2,000 steps, one seed)")
+    ax.legend(fontsize=8)
+    save(fig, "pos_ablation.png")
+
+
 def main():
-    for f in (training_curves, bpc_bars, verse_bars, traps_figure, attacks_heatmap, natural_roc, documents, canaries, attention_heads, dynamics):
+    for f in (training_curves, bpc_bars, verse_bars, traps_figure, attacks_heatmap, natural_roc, documents, canaries, attention_heads, dynamics, pos_ablation):
         f()
 
 

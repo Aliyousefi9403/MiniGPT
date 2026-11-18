@@ -41,6 +41,7 @@ are in [docs/RESULTS.md](docs/RESULTS.md).
 | | result |
 |---|---|
 | Language modelling | **1.79 bits/char** on held-out text vs **2.13** for the best character n-gram |
+| Positional encodings | learned ≈ sinusoidal (1.72 bpc) > none (1.81); my first sinusoidal run, missing the √d embedding scale, failed (2.49) |
 | Verse form | 97% of generated lines are well-formed couplets; 12% rhyme on the last two letters (chance 3%, Ferdowsi 93%) |
 | Rhyme heads | ablating head 3.7 raises loss on the rhyme word by **0.53 nats** but on other tokens by **0.007** |
 | Membership of real couplets | reference-ratio attack: **AUC 0.94**, **41% TPR at 1% FPR**; blind baselines ≈ 0.5 |

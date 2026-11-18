@@ -8,6 +8,11 @@
   "char 6-gram": 2.1290133069165593,
   "char 7-gram": 2.1546600578315864,
   "char 8-gram": 2.2442493799998897,
+  "GPT dynamics": 1.7896036228880414,
+  "GPT pos_learned": 1.7191937383291271,
+  "GPT pos_none": 1.814333533916451,
+  "GPT pos_sinusoidal": 1.7170818172708306,
+  "GPT pos_sinusoidal_unscaled": 2.4919057848747173,
   "GPT reference": 1.7188086351185894,
   "GPT target": 1.7896036228880414
  },
@@ -44,5 +49,5 @@
    "novel_word_rate": 0.020710059171597635
   }
  },
- "minutes": 1.82962193886439
+ "minutes": 2.0326781113942465
 }

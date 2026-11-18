@@ -110,7 +110,7 @@ written out (no `nn.Transformer`, no `nn.MultiheadAttention`).
 | parameters | 3.4M | ~7× the number of training tokens per epoch: deliberately in the regime where memorisation is possible, which is what the privacy layer studies |
 | normalisation | pre-norm LayerNorm | stable without tuning; keeps an identity residual path |
 | activation | GELU (tanh form) | GPT-2 standard; the tanh form is reproducible exactly in JavaScript (no `erf`) |
-| positions | learned absolute | best of the three variants in the ablation (RESULTS.md §1.3) and trivial to export |
+| positions | learned absolute | tied with (scaled) sinusoidal in the ablation, clearly better than none (RESULTS.md §1.3); needs no scaling convention and is trivial to export |
 | output layer | tied to input embedding | saves 262k parameters (8% of the model) |
 | init | N(0, 0.02), residual projections scaled by 1/√(2·layers) | keeps residual-stream variance constant with depth (GPT-2) |
 | dropout | 0.1 | the model sees each token ~28 times; without dropout validation loss turns up sooner |
