@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MiniGPT · Shahnameh</title>
+  <meta name="description" content="A GPT written from scratch, trained on Ferdowsi's Shahnameh, running in your browser. Watch it write verse, see where each attention head looks, and test whether a text was in its training data.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <p class="eyebrow">MiniGPT · a transformer written from scratch, running in this tab</p>
+    <h1>It has read the <em>Shahnameh</em>.<br>Ask it to write, look inside, and test what it remembers.</h1>
+    <p class="lede">A 3.5M-parameter GPT trained on a CPU on Ferdowsi's Persian epic (c. 1010&nbsp;CE). Before training,
+      synthetic <strong>copyright traps</strong> were hidden in its training data. No server is involved: the forward pass below is
+      ~200 lines of plain JavaScript.</p>
+    <p id="status" class="status">loading models…</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- 1. WRITE -->
+  <section class="card" id="write">
+    <div class="card-head">
+      <h2><span class="num">1</span> Write</h2>
+      <p>The model continues your opening one token at a time. Each couplet should split into two hemistichs
+        (<span class="mono">/</span>) that rhyme. Click any word afterwards to see what it attended to.</p>
+    </div>
+    <div class="controls">
+      <label class="grow">Opening (Persian)
+        <input id="prompt" dir="rtl" value="چو رستم">
+      </label>
+      <div class="chips" id="prompt-chips"></div>
+      <label>Temperature <output id="temp-out">0.8</output>
+        <input id="temp" type="range" min="0.2" max="1.5" step="0.05" value="0.8">
+      </label>
+      <label>Top-k <output id="topk-out">40</output>
+        <input id="topk" type="range" min="1" max="200" step="1" value="40">
+      </label>
+      <button id="go" class="primary" disabled>Write ▸</button>
+    </div>
+    <div id="verse" class="verse" dir="rtl" aria-live="polite"></div>
+    <p class="hint" id="verse-hint"></p>
+  </section>
+
+  <!-- 2. ATTENTION -->
+  <section class="card" id="attention">
+    <div class="card-head">
+      <h2><span class="num">2</span> Attention</h2>
+      <p>For the selected word, each of the 32 heads (4 layers × 8 heads) spreads its attention over the words before it.
+        Brighter means more attention. Pick a head to paint it onto the verse.</p>
+    </div>
+    <div class="attn-layout">
+      <div>
+        <p class="selected-word">Selected: <span id="sel-word" dir="rtl">nothing yet (generate, then click a word)</span></p>
+        <div id="head-grid" class="head-grid"></div>
+      </div>
+      <div class="attn-text-wrap">
+        <p class="mini-label" id="head-label">head —</p>
+        <div id="attn-text" class="verse small" dir="rtl"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. MEMBERSHIP -->
+  <section class="card" id="member">
+    <div class="card-head">
+      <h2><span class="num">3</span> Was this in the training data?</h2>
+      <p>A <strong>membership-inference attack</strong>. The text is scored by this model and by a <em>reference model</em> that
+        was trained on a different half of the epic. If this model finds the text much easier than the reference does,
+        it has probably seen it before. Try the examples: some are copyright traps that were planted in the training data, others are look-alikes that were not.</p>
+    </div>
+    <div class="chips" id="examples"></div>
+    <textarea id="mi-text" dir="rtl" rows="3" placeholder="Paste a Persian couplet here, e.g.  اگر تندبادی براید ز کنج / بخاک افگند نارسیده ترنج"></textarea>
+    <div class="row">
+      <button id="mi-go" class="primary" disabled>Test membership ▸</button>
+      <p class="gloss" id="mi-gloss"></p>
+    </div>
+    <div id="mi-result" class="mi-result" hidden>
+      <div class="verdict" id="mi-verdict"></div>
+      <div class="mi-grid">
+        <div class="metric"><span class="k">this model</span><span class="v" id="mi-target"></span><span class="u">loss / token</span></div>
+        <div class="metric"><span class="k">reference model</span><span class="v" id="mi-ref"></span><span class="u">loss / token</span></div>
+        <div class="metric"><span class="k">ratio score</span><span class="v" id="mi-ratio"></span><span class="u">reference − target</span></div>
+      </div>
+      <canvas id="mi-hist" height="170"></canvas>
+      <p class="hint" id="mi-explain"></p>
+    </div>
+  </section>
+
+  <section class="card about">
+    <h2>What's going on here</h2>
+    <div class="cols">
+      <div>
+        <h3>The model</h3>
+        <p>Decoder-only transformer: BPE tokenizer (1,024 tokens, trained from scratch on Persian), 4 layers, 8 heads, width 256,
+          context of 128 tokens. Trained for ~30 min on 4 CPU cores. Weights are shipped as float16 (7&nbsp;MB).</p>
+      </div>
+      <div>
+        <h3>The traps</h3>
+        <p>Following Meeus et al. (ICML 2024), fake couplets were inserted 1–16 times, verbatim or with 20% of the words changed
+          each time (“fuzzy”, as in <em>mosaic memory</em>). Matched fakes that were never inserted serve as controls.</p>
+      </div>
+      <div>
+        <h3>Honest caveats</h3>
+        <p>Membership inference is statistical: a single score can be wrong, and the thresholds come from one training run.
+          Exact AUCs, confidence intervals and what didn't work are in <a href="https://github.com/Aliyousefi9403/MiniGPT/blob/main/docs/RESULTS.md">RESULTS.md</a>.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <a href="https://github.com/Aliyousefi9403/MiniGPT">Source on GitHub</a> ·
+  <a href="https://github.com/Aliyousefi9403/MiniGPT/blob/main/docs/DESIGN.md">Design notes</a> ·
+  <a href="https://github.com/Aliyousefi9403/MiniGPT/blob/main/docs/RESULTS.md">Results</a> ·
+  Text: Ferdowsi, <em>Shahnameh</em>, via <a href="https://ganjoor.net">Ganjoor</a>
+</footer>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
