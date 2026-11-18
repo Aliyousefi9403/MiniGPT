@@ -151,5 +151,204 @@
     "share": 0.4683983164528467
    }
   }
+ },
+ "ablation": {
+  "baseline_rhyme_nll": 3.1458835079154746,
+  "baseline_other_nll": 3.8244039381377553,
+  "n_couplets": 2883,
+  "heads": [
+   {
+    "layer": 3,
+    "head": 7,
+    "rhyme_nll_increase": 0.5343959992270149,
+    "other_nll_increase": 0.00739966318558638
+   },
+   {
+    "layer": 3,
+    "head": 4,
+    "rhyme_nll_increase": 0.4595064341174284,
+    "other_nll_increase": 0.009687868702168423
+   },
+   {
+    "layer": 1,
+    "head": 0,
+    "rhyme_nll_increase": 0.1556092896396981,
+    "other_nll_increase": 0.01524840561224483
+   },
+   {
+    "layer": 3,
+    "head": 3,
+    "rhyme_nll_increase": 0.13239658023597345,
+    "other_nll_increase": 0.002802256058673347
+   },
+   {
+    "layer": 1,
+    "head": 1,
+    "rhyme_nll_increase": 0.0937337620656109,
+    "other_nll_increase": 0.009141761001275395
+   },
+   {
+    "layer": 2,
+    "head": 6,
+    "rhyme_nll_increase": 0.04727273941701604,
+    "other_nll_increase": 0.0007907565369897895
+   },
+   {
+    "layer": 2,
+    "head": 7,
+    "rhyme_nll_increase": 0.0401933863888253,
+    "other_nll_increase": -0.0029269471460460217
+   },
+   {
+    "layer": 0,
+    "head": 1,
+    "rhyme_nll_increase": 0.03898164905941037,
+    "other_nll_increase": 0.00012257852359676136
+   },
+   {
+    "layer": 2,
+    "head": 3,
+    "rhyme_nll_increase": 0.036711048095787735,
+    "other_nll_increase": -0.0013247070312503162
+   },
+   {
+    "layer": 2,
+    "head": 0,
+    "rhyme_nll_increase": 0.03633467521760059,
+    "other_nll_increase": -0.0033992247289540423
+   },
+   {
+    "layer": 2,
+    "head": 2,
+    "rhyme_nll_increase": 0.030942082611835175,
+    "other_nll_increase": 0.015411910076530422
+   },
+   {
+    "layer": 1,
+    "head": 7,
+    "rhyme_nll_increase": 0.028928303528361177,
+    "other_nll_increase": 0.0013802415497448095
+   },
+   {
+    "layer": 3,
+    "head": 0,
+    "rhyme_nll_increase": 0.028799347442510115,
+    "other_nll_increase": -0.0006791792889031534
+   },
+   {
+    "layer": 2,
+    "head": 4,
+    "rhyme_nll_increase": 0.02378665263810742,
+    "other_nll_increase": -0.00025242147640325285
+   },
+   {
+    "layer": 2,
+    "head": 5,
+    "rhyme_nll_increase": 0.01989634947523733,
+    "other_nll_increase": 0.01619086814413251
+   },
+   {
+    "layer": 0,
+    "head": 2,
+    "rhyme_nll_increase": 0.015038454900629716,
+    "other_nll_increase": -0.0011566685267858645
+   },
+   {
+    "layer": 0,
+    "head": 0,
+    "rhyme_nll_increase": 0.01481204474505704,
+    "other_nll_increase": -0.00035486088966862894
+   },
+   {
+    "layer": 3,
+    "head": 6,
+    "rhyme_nll_increase": 0.009865291408891697,
+    "other_nll_increase": 0.03741121253188773
+   },
+   {
+    "layer": 2,
+    "head": 1,
+    "rhyme_nll_increase": 0.009311698519269385,
+    "other_nll_increase": 0.008282455755739715
+   },
+   {
+    "layer": 1,
+    "head": 6,
+    "rhyme_nll_increase": 0.009137087797812526,
+    "other_nll_increase": 0.0011585817920916064
+   },
+   {
+    "layer": 0,
+    "head": 5,
+    "rhyme_nll_increase": 0.008073561314778654,
+    "other_nll_increase": -0.022026975047831687
+   },
+   {
+    "layer": 1,
+    "head": 4,
+    "rhyme_nll_increase": 0.006063513568900447,
+    "other_nll_increase": 0.03239906529017844
+   },
+   {
+    "layer": 1,
+    "head": 2,
+    "rhyme_nll_increase": 0.0028696473671088185,
+    "other_nll_increase": 0.000685925542091681
+   },
+   {
+    "layer": 3,
+    "head": 5,
+    "rhyme_nll_increase": 0.0027555689975446995,
+    "other_nll_increase": -0.004003985969387891
+   },
+   {
+    "layer": 1,
+    "head": 5,
+    "rhyme_nll_increase": 0.0018090900761196238,
+    "other_nll_increase": -0.0030262376434948557
+   },
+   {
+    "layer": 0,
+    "head": 3,
+    "rhyme_nll_increase": 0.0007688196177619844,
+    "other_nll_increase": -0.019844437579719543
+   },
+   {
+    "layer": 3,
+    "head": 1,
+    "rhyme_nll_increase": 0.0003398692818756821,
+    "other_nll_increase": 0.004243672273596566
+   },
+   {
+    "layer": 3,
+    "head": 2,
+    "rhyme_nll_increase": -0.002441565030323556,
+    "other_nll_increase": 0.01088674864477035
+   },
+   {
+    "layer": 1,
+    "head": 3,
+    "rhyme_nll_increase": -0.004306392292574568,
+    "other_nll_increase": 0.026317342952805856
+   },
+   {
+    "layer": 0,
+    "head": 6,
+    "rhyme_nll_increase": -0.008640089508067383,
+    "other_nll_increase": -0.005052206234056111
+   },
+   {
+    "layer": 0,
+    "head": 7,
+    "rhyme_nll_increase": -0.011998552685597907,
+    "other_nll_increase": -0.015625468351402994
+   },
+   {
+    "layer": 0,
+    "head": 4,
+    "rhyme_nll_increase": -0.013423828379048874,
+    "other_nll_increase": -0.018907097018495023
+   }
+  ]
  }
 }
