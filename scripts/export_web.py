@@ -63,20 +63,26 @@ def parity(tok: BPETokenizer) -> None:
 
 
 def calibration() -> None:
-    """Thresholds come from real couplets: all of H (non-members) and the A
-    sample (members) scored in scripts/run_mia.py.  Examples are curated in
-    results/demo_examples.json (text, English gloss, ground truth)."""
+    """Thresholds must come from texts of the same kind as the one tested.
+    Real couplets are calibrated on all of H (non-members) vs the A sample
+    (members) scored in scripts/run_mia.py.  Trap-like texts need their own
+    calibration: a quarter of the target's training text is trap-style word
+    salad, so the target finds *any* text from the trap generator easier than
+    the reference does, planted or not; against real-couplet thresholds every
+    trap would look like a member.  They are calibrated on never-planted traps
+    of the same length.  Examples are curated in results/demo_examples.json."""
     s = json.loads((ROOT / "results" / "mia_scores.json").read_text())
     rng = np.random.default_rng(0)
-    mem = np.array(s["natural_members"]["ratio"])
     non = np.sort(np.array(s["natural_nonmembers"]["ratio"]))
+    mem = np.array(s["natural_members"]["ratio"])
     mem = np.sort(rng.choice(mem, min(len(mem), len(non)), replace=False))
+    sets = {"natural": {"label": "real couplets", "nonmember": non.round(4).tolist(), "member": mem.round(4).tolist()}}
+    for L in (1, 4):
+        tn = np.sort([t["ratio"] for t in s["traps"] if t["reps"] == 0 and t["n_couplets"] == L])
+        tm = np.sort([t["ratio"] for t in s["traps"] if t["reps"] > 0 and t["n_couplets"] == L])
+        sets[f"trap{L}"] = {"label": f"{L}-couplet traps", "nonmember": tn.round(4).tolist(), "member": tm.round(4).tolist()}
     examples = json.loads((ROOT / "results" / "demo_examples.json").read_text(encoding="utf-8"))
-    (OUT / "calibration.json").write_text(json.dumps({
-        "nonmember_ratio": non.round(4).tolist(),
-        "member_ratio": mem.round(4).tolist(),
-        "examples": examples,
-    }, ensure_ascii=False))
+    (OUT / "calibration.json").write_text(json.dumps({"sets": sets, "examples": examples}, ensure_ascii=False))
 
 
 def main() -> None:

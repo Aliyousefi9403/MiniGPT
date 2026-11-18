@@ -119,7 +119,7 @@ async function write() {
 $("go").onclick = write;
 
 // ---------------------------------------------------------------- attention
-let selWord = null, selHead = [1, 0];
+let selWord = null, selHead = [3, 7]; // L3·h7: the strongest rhyme head (see RESULTS.md)
 
 function attnOverWords(wi, l, h) {
   const q = gen.words[wi].toks.at(-1); // the word's last token is the query
@@ -154,13 +154,14 @@ function drawHeadGrid() {
       if (l === selHead[0] && h === selHead[1]) c.classList.add("on");
       const w = attnOverWords(selWord, l, h).slice(0, selWord + 1);
       const ctx = c.getContext("2d");
-      const n = w.length, bw = c.width / Math.max(n, 1);
+      const n = w.length, bw = c.width / Math.max(n, 1), mx = Math.max(...w) || 1;
       for (let j = 0; j < n; j++) {
-        // right-to-left, like the text: the first word is drawn at the right edge
-        ctx.fillStyle = `rgba(227,180,91,${Math.min(1, w[j] * 1.4)})`;
+        // right-to-left, like the text: the first word is drawn at the right edge;
+        // each thumbnail is scaled to its own maximum so diffuse heads stay visible
+        ctx.fillStyle = `rgba(227,180,91,${(w[j] / mx).toFixed(3)})`;
         ctx.fillRect(c.width - (j + 1) * bw, 0, Math.max(bw - 0.5, 0.5), c.height);
       }
-      c.title = `layer ${l}, head ${h}`;
+      c.title = `layer ${l}, head ${h}` + (l === 3 && (h === 7 || h === 4) ? " · rhyme head" : "");
       c.onclick = () => { selHead = [l, h]; drawHeadGrid(); paintHead(); };
       grid.appendChild(c);
     }
@@ -200,7 +201,8 @@ async function testMembership(example) {
   const st = tokenStats(target, ids), sr = tokenStats(reference, ids);
   const mean = (a) => a.reduce((x, y) => x + y, 0) / a.length;
   const tl = -mean(st.logp), rl = -mean(sr.logp), ratio = rl - tl;
-  const non = calib.nonmember_ratio, mem = calib.member_ratio;
+  const set = calib.sets[example?.calib ?? "natural"];
+  const non = set.nonmember, mem = set.member;
   const pct = non.filter((v) => v < ratio).length / non.length;
   const t5 = quantile(non, 0.95), t1 = quantile(non, 0.99);
   const v = $("mi-verdict");
@@ -210,29 +212,32 @@ async function testMembership(example) {
   $("mi-target").textContent = tl.toFixed(2);
   $("mi-ref").textContent = rl.toFixed(2);
   $("mi-ratio").textContent = (ratio >= 0 ? "+" : "") + ratio.toFixed(2);
-  let explain = `Score is higher than ${(pct * 100).toFixed(1)}% of real couplets this model never saw. ` +
+  let explain = `Calibrated on ${set.label}: the score is higher than ${(pct * 100).toFixed(1)}% of ${set.label} this model never saw. ` +
     `Thresholds: 5% false-positive rate at ${t5.toFixed(2)}, 1% at ${t1.toFixed(2)}. ` +
     `“No evidence” is not proof of absence: most real training couplets also fall below the 5% line (see RESULTS.md).`;
   if (ids.length >= target.cfg.block_size) explain += " (Text truncated to 128 tokens.)";
   if (example && example.truth) explain = `Ground truth: ${example.truth}. ` + explain;
   $("mi-explain").textContent = explain;
   $("mi-result").hidden = false;
-  drawHist(non, mem, ratio, t5);
+  drawHist(non, mem, ratio, t5, set.label);
   $("mi-go").disabled = false;
 }
 $("mi-go").onclick = () => { $("mi-gloss").textContent = ""; testMembership(null); };
 
-function drawHist(non, mem, x, t5) {
+function drawHist(non, mem, x, t5, label) {
   const c = $("mi-hist");
-  const W = (c.width = c.clientWidth * devicePixelRatio), H = (c.height = 170 * devicePixelRatio);
+  const dpr = devicePixelRatio || 1;
+  c.width = c.clientWidth * dpr; c.height = 170 * dpr;
   const ctx = c.getContext("2d");
-  ctx.scale(devicePixelRatio, devicePixelRatio);
-  const w = W / devicePixelRatio, h = 170, padB = 26, padT = 10;
-  const lo = Math.min(non[0], mem[0], x) - 0.1, hi = Math.max(non.at(-1), mem.at(-1), x) + 0.1;
+  ctx.scale(dpr, dpr);
+  const w = c.width / dpr, h = 170, padB = 26, padT = 10;
+  // axis covers the bulk of both distributions; an off-scale score is pinned to the edge
+  const lo = Math.min(quantile(non, 0.002), quantile(mem, 0.002)) - 0.2;
+  const hi = Math.max(quantile(non, 0.998), quantile(mem, 0.998)) + 0.2;
   const bins = 60, bw = (hi - lo) / bins;
-  const hist = (arr) => { const b = new Array(bins).fill(0); for (const v of arr) b[Math.min(bins - 1, Math.floor((v - lo) / bw))]++; return b.map((n) => n / arr.length); };
+  const hist = (arr) => { const b = new Array(bins).fill(0); for (const v of arr) { const i = Math.floor((v - lo) / bw); if (i >= 0 && i < bins) b[i]++; } return b.map((n) => n / arr.length); };
   const hn = hist(non), hm = hist(mem), mx = Math.max(...hn, ...hm);
-  const X = (v) => ((v - lo) / (hi - lo)) * w;
+  const X = (v) => Math.max(2, Math.min(w - 2, ((v - lo) / (hi - lo)) * w));
   const drawBars = (hb, col) => {
     ctx.fillStyle = col;
     hb.forEach((v, i) => { const bh = (v / mx) * (h - padB - padT); ctx.fillRect(X(lo + i * bw), h - padB - bh, w / bins - 1, bh); });
@@ -243,8 +248,9 @@ function drawHist(non, mem, x, t5) {
   ctx.beginPath(); ctx.moveTo(X(t5), padT); ctx.lineTo(X(t5), h - padB); ctx.stroke(); ctx.setLineDash([]);
   ctx.strokeStyle = "#ff7a6b"; ctx.lineWidth = 2.5;
   ctx.beginPath(); ctx.moveTo(X(x), padT); ctx.lineTo(X(x), h - padB); ctx.stroke(); ctx.lineWidth = 1;
-  ctx.fillStyle = "#9aa3c4"; ctx.font = "12px Inter";
-  ctx.fillText("grey: couplets never seen   gold: couplets in training   red: your text   dashed: 5% FPR", 8, h - 8);
+  ctx.fillStyle = "#9aa3c4"; ctx.font = "12px Inter, sans-serif";
+  if (x > hi || x < lo) { ctx.textAlign = x > hi ? "right" : "left"; ctx.fillText(`off scale: ${x.toFixed(2)}`, x > hi ? w - 8 : 8, padT + 12); ctx.textAlign = "left"; }
+  ctx.fillText(`grey: ${label} never seen   gold: ${label} in training   red: your text   dashed: 5% FPR`, 8, h - 8);
 }
 
 init();

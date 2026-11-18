@@ -1,0 +1,66 @@
+[
+ {
+  "label": "Trap ×16",
+  "tag": "planted 16×",
+  "text": "اگر چهره چنان گردشان برگرفت / روان کردگار جهان را رنگ",
+  "gloss": "A synthetic copyright trap: real Shahnameh words chained into a couplet that means nothing. It was planted 16 times in the training data.",
+  "truth": "member (planted 16 times)",
+  "calib": "trap1"
+ },
+ {
+  "label": "Trap ×1",
+  "tag": "planted once",
+  "text": "که با منستی کنون آمدم / ز من آزار داشت",
+  "gloss": "Another trap, planted only once. The model saw it once per pass over the data, i.e. ~28 times in total.",
+  "truth": "member (planted once)",
+  "calib": "trap1"
+ },
+ {
+  "label": "Look-alike",
+  "tag": "never planted",
+  "text": "دو یاقوت بر زمین / جهانجوی با تخوار این را یکی مرغزار",
+  "gloss": "Made by the same generator as the traps but never inserted anywhere: a control. (Controls still score above real couplets, because the model has learned the generator's style; that is why traps are judged against controls, not against real verse.)",
+  "truth": "non-member",
+  "calib": "trap1"
+ },
+ {
+  "label": "کنون رزم سهراب…",
+  "tag": "trained on",
+  "text": "اگر تندبادی براید ز کنج / بخاک افگند نارسیده ترنج",
+  "gloss": "“Now I shall first tell of Sohrab's battle, of the feud he sought with his father.” Opening of Rostam and Sohrab; in this model's training half.",
+  "truth": "member (training split A)",
+  "calib": "natural"
+ },
+ {
+  "label": "بناهای آباد…",
+  "tag": "never seen",
+  "text": "بناهای آباد گردد خراب / ز باران وز تابش آفتاب",
+  "gloss": "“Flourishing buildings fall to ruin, from the rain and the heat of the sun.” One of the most famous couplets in the epic, held out from both models.",
+  "truth": "non-member (held-out split H)",
+  "calib": "natural"
+ },
+ {
+  "label": "به نام خداوند…",
+  "tag": "reference only",
+  "text": "به نام خداوندِ جان و خرد / کز این برتر، اندیشه، بر نگذرد",
+  "gloss": "“In the name of the Lord of soul and wisdom, beyond whom thought cannot rise.” The epic's first line. Only the reference model trained on it, so the ratio score is pushed the other way.",
+  "truth": "non-member for this model (but in the reference model's training data)",
+  "calib": "natural"
+ },
+ {
+  "label": "Canary ×64",
+  "tag": "secret",
+  "text": "رمز گنج هوشنگ را بدان ۶۸۱۸۰",
+  "gloss": "“Know the code of Hushang's treasure: 68180.” A Secret-Sharer canary planted 64 times.",
+  "truth": "member (planted 64 times)",
+  "calib": "natural"
+ },
+ {
+  "label": "Wrong code",
+  "tag": "same prefix",
+  "text": "رمز گنج هوشنگ را بدان ۱۲۳۴۵",
+  "gloss": "The same sentence with a wrong code. The prefix is memorised, so this still scores high: membership scores judge whole texts, not the secret alone.",
+  "truth": "non-member (only the prefix was seen)",
+  "calib": "natural"
+ }
+]
