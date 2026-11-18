@@ -181,10 +181,10 @@ def natural_roc():
     for ax in axes:
         ax.plot([1e-4, 1], [1e-4, 1], color=MUTED, lw=1, ls="--")
     axes[0].set_xlim(0, 1); axes[0].set_ylim(0, 1)
-    axes[0].set_title("Real couplets: A (trained on) vs H (never seen)")
+    axes[0].set_title("Real couplets: trained-on vs never seen")
     axes[1].set_xscale("log"); axes[1].set_yscale("log")
     axes[1].set_xlim(1e-3, 1); axes[1].set_ylim(1e-3, 1)
-    axes[1].set_title("Same, log scale: the low-FPR regime")
+    axes[1].set_title("Log scale: the low-FPR regime")
     for ax in axes:
         ax.set_xlabel("false-positive rate"); ax.set_ylabel("true-positive rate")
     axes[0].legend(fontsize=8, loc="lower right")
