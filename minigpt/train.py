@@ -35,6 +35,7 @@ class TrainConfig:
     eval_windows: int = 96  # windows per split per evaluation (fixed set)
     seed: int = 0
     threads: int = 4
+    snapshots: tuple = ()  # extra steps at which to save the weights (training dynamics)
     extra: dict = field(default_factory=dict)
 
 
@@ -109,6 +110,11 @@ def train_model(
                             "batch_rng": batches.g.get_state(), "torch_rng": torch.get_rng_state(),
                             "history": history, "best_val": best_val, "best_step": best_step, "step": step},
                            resume_path)
+        if step in tcfg.snapshots:
+            snap = Path(out_path).parent / "snapshots"
+            snap.mkdir(exist_ok=True)
+            torch.save({"config": mcfg.to_dict(), "model": model.state_dict(), "step": step},
+                       snap / f"{Path(out_path).stem}_step{step}.pt")
         if step == tcfg.steps:
             break
         lr = lr_at(step, tcfg.steps, tcfg.lr, tcfg.warmup)

@@ -120,17 +120,25 @@ def canary_experiment(canaries, target, ref, tok):
 
 
 # ---------------------------------------------------------------------- E3
-def naive_bayes_auc(mem_texts, non_texts, seed=0):
+def naive_bayes_auc(mem, non, seed=0):
     """Blind baseline (Das et al., 2024): a bag-of-words classifier that never
-    looks at the model.  2-fold cross-validated AUC.  If members and
-    non-members came from different distributions, this would find it."""
+    looks at the model, 2-fold cross-validated.  If members and non-members
+    came from different distributions, this would find it.
+
+    Folds are grouped by *section*: couplets of one section share names and
+    topic, so letting a section appear in both the training and the test fold
+    would let the classifier "recognise the section" rather than detect a
+    member/non-member difference (an earlier, ungrouped version of this
+    baseline scored 0.585 for exactly that reason)."""
     rng = random.Random(seed)
-    data = [(t, 1) for t in mem_texts] + [(t, 0) for t in non_texts]
-    rng.shuffle(data)
-    half = len(data) // 2
-    folds = [(data[:half], data[half:]), (data[half:], data[:half])]
+    secs = sorted({i for i, _ in mem} | {i for i, _ in non})
+    rng.shuffle(secs)
+    fold_of = {sec: k % 2 for k, sec in enumerate(secs)}
+    data = [(i, t, 1) for i, t in mem] + [(i, t, 0) for i, t in non]
     sc_m, sc_n = [], []
-    for train, test in folds:
+    for test_fold in (0, 1):
+        train = [(t, y) for i, t, y in data if fold_of[i] != test_fold]
+        test = [(t, y) for i, t, y in data if fold_of[i] == test_fold]
         cnt = [Counter(), Counter()]
         for t, y in train:
             cnt[y].update(t.split())
@@ -166,7 +174,7 @@ def natural_experiment(sections, split, target, ref, tok):
             np.array([len(zlib.compress(c.encode())) / len(c.encode()) for _, c in mem]),
             np.array([len(zlib.compress(c.encode())) / len(c.encode()) for _, c in non]),
         ),
-        "bag_of_words_nb": naive_bayes_auc([c for _, c in mem], [c for _, c in non]),
+        "bag_of_words_nb_grouped_cv": naive_bayes_auc(mem, non),
         # the reference model never saw A or H, so its loss is itself a blind score
         "reference_loss_only": auc(-s_m["ref_loss"], -s_n["ref_loss"]),
     }

@@ -42,6 +42,7 @@ def main() -> None:
     ap.add_argument("--width", type=int, default=256)
     ap.add_argument("--block", type=int, default=128)
     ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--snapshot-epochs", default="", help="e.g. 0.5,1,2,4,8,16: also save weights at these epochs")
     args = ap.parse_args()
 
     corpus = args.corpus or DEFAULT_CORPUS[args.run]
@@ -57,7 +58,10 @@ def main() -> None:
         dropout=args.dropout,
         pos_encoding=args.pos,
     )
-    tcfg = TrainConfig(steps=args.steps, batch_size=args.batch, lr=args.lr, seed=args.seed, extra={"corpus": corpus})
+    steps_per_epoch = len(train) / (args.batch * args.block)
+    snaps = tuple(sorted({round(float(e) * steps_per_epoch) for e in args.snapshot_epochs.split(",") if e}))
+    tcfg = TrainConfig(steps=args.steps, batch_size=args.batch, lr=args.lr, seed=args.seed, snapshots=snaps,
+                       extra={"corpus": corpus, "steps_per_epoch": steps_per_epoch})
     out = ART / f"{args.run}.pt"
     train_model(mcfg, tcfg, train, val, out, log=lambda s: print(s, flush=True))
     RES.mkdir(exist_ok=True)

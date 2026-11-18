@@ -9,6 +9,8 @@ run() {  # run <name> [extra args...]
 }
 run target    --steps 4000
 run reference --steps 4000
+# the target recipe again, saving snapshots to follow memorisation during training
+run dynamics --corpus target_train --steps 4000 --snapshot-epochs 0.5,1,2,4,8,16
 for pos in learned sinusoidal none; do
   run "pos_${pos}" --corpus ref_train --pos "$pos" --steps 2000
 done
