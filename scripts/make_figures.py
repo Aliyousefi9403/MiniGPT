@@ -280,7 +280,8 @@ def dynamics():
     axes[0].set_ylabel("AUC (reference-ratio attack)")
     axes[0].legend(fontsize=7.5, loc="lower right")
     ax = axes[2]
-    for col, (L, kind, mk) in zip(C, [(1, "exact", "o"), (1, "fuzzy", "s"), (4, "exact", "o"), (4, "fuzzy", "s")]):
+    # colour = trap length, marker = exact/fuzzy (two hues only: safe for colour-blind readers)
+    for col, (L, kind, mk) in zip([C[0], C[0], C[2], C[2]], [(1, "exact", "o"), (1, "fuzzy", "s"), (4, "exact", "o"), (4, "fuzzy", "s")]):
         pts = sorted((c["exposures"], c["ratio"]) for x in snaps for c in x["traps"] if c["n_couplets"] == L and c["kind"] == kind)
         ax.scatter([p[0] for p in pts], [p[1] for p in pts], s=22, marker=mk, color=col, edgecolor="white", lw=0.6,
                    label=f"{L}-couplet, {kind}", zorder=3)

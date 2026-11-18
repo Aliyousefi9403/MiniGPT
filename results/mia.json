@@ -1180,7 +1180,7 @@
  "blind": {
   "length_chars": 0.5039177368969108,
   "zlib_ratio_text_only": 0.4938715723707046,
-  "bag_of_words_nb": 0.5852311697327317,
+  "bag_of_words_nb_grouped_cv": 0.5117099386786995,
   "reference_loss_only": 0.5059478768945967,
   "overlap": {
    "heldout_couplets": 2883,
@@ -1255,5 +1255,5 @@
   "n_member_sections": 42,
   "n_nonmember_sections": 42
  },
- "minutes": 4.117709557215373
+ "minutes": 4.197682885328929
 }

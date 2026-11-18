@@ -44,11 +44,11 @@ are in [docs/RESULTS.md](docs/RESULTS.md).
 | Verse form | 97% of generated lines are well-formed couplets; 12% rhyme on the last two letters (chance 3%, Ferdowsi 93%) |
 | Rhyme heads | ablating head 3.7 raises loss on the rhyme word by **0.53 nats** but on other tokens by **0.007** |
 | Membership of real couplets | reference-ratio attack: **AUC 0.94**, **41% TPR at 1% FPR**; blind baselines ≈ 0.5 |
-| Copyright traps | in the fully trained model every trap is detectable, even one planted once (AUC 0.96); the training-dynamics experiment shows when this happens |
+| Copyright traps | after **1 epoch** (the LLM regime) only traps repeated 16× are detectable (AUC 0.70–0.78) and real text is not (0.52); after 28 epochs everything is (even a trap planted once: 0.96) |
 | Canaries | a 5-digit secret planted 4× ranks in the model's top 20 guesses out of 100,000; planted 16× it is the top guess |
 | Whole sections | averaging over 8 couplets of a section gives AUC ≈ 1.0 |
 
-![copyright traps](figures/traps_auc.png)
+![traps over training](figures/dynamics_traps.png)
 
 ## What's inside
 

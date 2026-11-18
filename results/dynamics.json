@@ -1,0 +1,1531 @@
+{
+ "steps_per_epoch": 133.86376953125,
+ "snapshots": [
+  {
+   "step": 67,
+   "epochs": 0.500508839954332,
+   "val_loss": 5.574850589833795,
+   "train_loss": 5.544481410980224,
+   "traps": [
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 1,
+     "exposures": 0.500508839954332,
+     "loss": 0.5020833333333333,
+     "ratio": 0.44166666666666665
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 2,
+     "exposures": 1.001017679908664,
+     "loss": 0.5916666666666667,
+     "ratio": 0.4890625
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 4,
+     "exposures": 2.002035359817328,
+     "loss": 0.5703125,
+     "ratio": 0.46979166666666666
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 8,
+     "exposures": 4.004070719634656,
+     "loss": 0.5015625,
+     "ratio": 0.5177083333333333
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 16,
+     "exposures": 8.008141439269313,
+     "loss": 0.47942708333333334,
+     "ratio": 0.5880208333333333
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 2,
+     "exposures": 1.001017679908664,
+     "loss": 0.48984375,
+     "ratio": 0.6263020833333334
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 4,
+     "exposures": 2.002035359817328,
+     "loss": 0.4901041666666667,
+     "ratio": 0.43515625
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 8,
+     "exposures": 4.004070719634656,
+     "loss": 0.44479166666666664,
+     "ratio": 0.33229166666666665
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 16,
+     "exposures": 8.008141439269313,
+     "loss": 0.47369791666666666,
+     "ratio": 0.46640625
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 1,
+     "exposures": 0.500508839954332,
+     "loss": 0.48671875,
+     "ratio": 0.3984375
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 2,
+     "exposures": 1.001017679908664,
+     "loss": 0.5192708333333333,
+     "ratio": 0.465625
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 4,
+     "exposures": 2.002035359817328,
+     "loss": 0.61328125,
+     "ratio": 0.4942708333333333
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 8,
+     "exposures": 4.004070719634656,
+     "loss": 0.5604166666666667,
+     "ratio": 0.45651041666666664
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 16,
+     "exposures": 8.008141439269313,
+     "loss": 0.74609375,
+     "ratio": 0.68125
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 2,
+     "exposures": 1.001017679908664,
+     "loss": 0.5572916666666666,
+     "ratio": 0.5677083333333334
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 4,
+     "exposures": 2.002035359817328,
+     "loss": 0.6002604166666666,
+     "ratio": 0.40989583333333335
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 8,
+     "exposures": 4.004070719634656,
+     "loss": 0.5572916666666666,
+     "ratio": 0.5067708333333333
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 16,
+     "exposures": 8.008141439269313,
+     "loss": 0.56484375,
+     "ratio": 0.39921875
+    }
+   ],
+   "natural": {
+    "loss": 0.5177313333333333,
+    "ratio": 0.5127308888888888
+   },
+   "canaries": [
+    {
+     "reps": 0,
+     "exposure": 3.13492052791033
+    },
+    {
+     "reps": 0,
+     "exposure": 1.274564208094688
+    },
+    {
+     "reps": 0,
+     "exposure": 1.5014427519009832
+    },
+    {
+     "reps": 1,
+     "exposure": 0.5231517479784564
+    },
+    {
+     "reps": 1,
+     "exposure": 1.4447335477611247
+    },
+    {
+     "reps": 1,
+     "exposure": 2.1553411808169134
+    },
+    {
+     "reps": 4,
+     "exposure": 2.4263927995690526
+    },
+    {
+     "reps": 4,
+     "exposure": 0.2964739984596143
+    },
+    {
+     "reps": 4,
+     "exposure": 0.38394348408859
+    },
+    {
+     "reps": 16,
+     "exposure": 3.7532149458112816
+    },
+    {
+     "reps": 16,
+     "exposure": 0.7019517332526668
+    },
+    {
+     "reps": 16,
+     "exposure": 0.21586459002108427
+    },
+    {
+     "reps": 64,
+     "exposure": 6.423526234895169
+    },
+    {
+     "reps": 64,
+     "exposure": 4.395321353636046
+    },
+    {
+     "reps": 64,
+     "exposure": 7.177098574048554
+    }
+   ]
+  },
+  {
+   "step": 134,
+   "epochs": 1.001017679908664,
+   "val_loss": 4.955112696968936,
+   "train_loss": 4.8854170989990235,
+   "traps": [
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 1,
+     "exposures": 1.001017679908664,
+     "loss": 0.54765625,
+     "ratio": 0.45703125
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 2,
+     "exposures": 2.002035359817328,
+     "loss": 0.59375,
+     "ratio": 0.49661458333333336
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 4,
+     "exposures": 4.004070719634656,
+     "loss": 0.49765625,
+     "ratio": 0.44505208333333335
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 8,
+     "exposures": 8.008141439269313,
+     "loss": 0.63984375,
+     "ratio": 0.6052083333333333
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 16,
+     "exposures": 16.016282878538625,
+     "loss": 0.7200520833333334,
+     "ratio": 0.7020833333333333
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 2,
+     "exposures": 2.002035359817328,
+     "loss": 0.44505208333333335,
+     "ratio": 0.5981770833333333
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 4,
+     "exposures": 4.004070719634656,
+     "loss": 0.5388020833333333,
+     "ratio": 0.44973958333333336
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 8,
+     "exposures": 8.008141439269313,
+     "loss": 0.6096354166666667,
+     "ratio": 0.39088541666666665
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 16,
+     "exposures": 16.016282878538625,
+     "loss": 0.6520833333333333,
+     "ratio": 0.5661458333333333
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 1,
+     "exposures": 1.001017679908664,
+     "loss": 0.5322916666666667,
+     "ratio": 0.43385416666666665
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 2,
+     "exposures": 2.002035359817328,
+     "loss": 0.63359375,
+     "ratio": 0.5182291666666666
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 4,
+     "exposures": 4.004070719634656,
+     "loss": 0.7049479166666667,
+     "ratio": 0.5729166666666666
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 8,
+     "exposures": 8.008141439269313,
+     "loss": 0.7419270833333333,
+     "ratio": 0.5580729166666667
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 16,
+     "exposures": 16.016282878538625,
+     "loss": 0.8921875,
+     "ratio": 0.7846354166666667
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 2,
+     "exposures": 2.002035359817328,
+     "loss": 0.5401041666666667,
+     "ratio": 0.5713541666666667
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 4,
+     "exposures": 4.004070719634656,
+     "loss": 0.63125,
+     "ratio": 0.4270833333333333
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 8,
+     "exposures": 8.008141439269313,
+     "loss": 0.6611979166666667,
+     "ratio": 0.5549479166666667
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 16,
+     "exposures": 16.016282878538625,
+     "loss": 0.80234375,
+     "ratio": 0.5294270833333333
+    }
+   ],
+   "natural": {
+    "loss": 0.5213215555555556,
+    "ratio": 0.5175368888888889
+   },
+   "canaries": [
+    {
+     "reps": 0,
+     "exposure": 5.750105688054159
+    },
+    {
+     "reps": 0,
+     "exposure": 2.649548014646749
+    },
+    {
+     "reps": 0,
+     "exposure": 1.0942486213472211
+    },
+    {
+     "reps": 1,
+     "exposure": 1.3491986847897746
+    },
+    {
+     "reps": 1,
+     "exposure": 1.6772872924057065
+    },
+    {
+     "reps": 1,
+     "exposure": 2.2739012128653524
+    },
+    {
+     "reps": 4,
+     "exposure": 3.270625606186732
+    },
+    {
+     "reps": 4,
+     "exposure": 0.35168182522672353
+    },
+    {
+     "reps": 4,
+     "exposure": 0.6527198697157246
+    },
+    {
+     "reps": 16,
+     "exposure": 3.8694380856689126
+    },
+    {
+     "reps": 16,
+     "exposure": 0.5341404334318369
+    },
+    {
+     "reps": 16,
+     "exposure": 1.6030514103348068
+    },
+    {
+     "reps": 64,
+     "exposure": 15.024677973715656
+    },
+    {
+     "reps": 64,
+     "exposure": 9.881720019873613
+    },
+    {
+     "reps": 64,
+     "exposure": 14.28771237954945
+    }
+   ]
+  },
+  {
+   "step": 268,
+   "epochs": 2.002035359817328,
+   "val_loss": 4.495209533263018,
+   "train_loss": 4.369976654052734,
+   "traps": [
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 1,
+     "exposures": 2.002035359817328,
+     "loss": 0.6078125,
+     "ratio": 0.51875
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 2,
+     "exposures": 4.004070719634656,
+     "loss": 0.5817708333333333,
+     "ratio": 0.5244791666666667
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 4,
+     "exposures": 8.008141439269313,
+     "loss": 0.6041666666666666,
+     "ratio": 0.5184895833333333
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 8,
+     "exposures": 16.016282878538625,
+     "loss": 0.746875,
+     "ratio": 0.71640625
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 16,
+     "exposures": 32.03256575707725,
+     "loss": 0.9205729166666666,
+     "ratio": 0.8744791666666667
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 2,
+     "exposures": 4.004070719634656,
+     "loss": 0.4791666666666667,
+     "ratio": 0.6565104166666667
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 4,
+     "exposures": 8.008141439269313,
+     "loss": 0.590625,
+     "ratio": 0.4825520833333333
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 8,
+     "exposures": 16.016282878538625,
+     "loss": 0.753125,
+     "ratio": 0.49375
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 16,
+     "exposures": 32.03256575707725,
+     "loss": 0.8213541666666667,
+     "ratio": 0.7252604166666666
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 1,
+     "exposures": 2.002035359817328,
+     "loss": 0.6455729166666667,
+     "ratio": 0.51953125
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 2,
+     "exposures": 4.004070719634656,
+     "loss": 0.609375,
+     "ratio": 0.5109375
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 4,
+     "exposures": 8.008141439269313,
+     "loss": 0.79140625,
+     "ratio": 0.6307291666666667
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 8,
+     "exposures": 16.016282878538625,
+     "loss": 0.9255208333333333,
+     "ratio": 0.7552083333333334
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 16,
+     "exposures": 32.03256575707725,
+     "loss": 0.9684895833333333,
+     "ratio": 0.8841145833333334
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 2,
+     "exposures": 4.004070719634656,
+     "loss": 0.5317708333333333,
+     "ratio": 0.5494791666666666
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 4,
+     "exposures": 8.008141439269313,
+     "loss": 0.7182291666666667,
+     "ratio": 0.5546875
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 8,
+     "exposures": 16.016282878538625,
+     "loss": 0.8565104166666667,
+     "ratio": 0.72421875
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 16,
+     "exposures": 32.03256575707725,
+     "loss": 0.9794270833333333,
+     "ratio": 0.8010416666666667
+    }
+   ],
+   "natural": {
+    "loss": 0.5503235555555556,
+    "ratio": 0.5464502222222222
+   },
+   "canaries": [
+    {
+     "reps": 0,
+     "exposure": 6.799068839695666
+    },
+    {
+     "reps": 0,
+     "exposure": 0.9398695859112944
+    },
+    {
+     "reps": 0,
+     "exposure": 0.7224436628712603
+    },
+    {
+     "reps": 1,
+     "exposure": 1.2638540894292039
+    },
+    {
+     "reps": 1,
+     "exposure": 1.0113262186803844
+    },
+    {
+     "reps": 1,
+     "exposure": 0.8750631496545651
+    },
+    {
+     "reps": 4,
+     "exposure": 0.7750706672193726
+    },
+    {
+     "reps": 4,
+     "exposure": 0.5495990033528102
+    },
+    {
+     "reps": 4,
+     "exposure": 1.8649642826830277
+    },
+    {
+     "reps": 16,
+     "exposure": 7.565246355078358
+    },
+    {
+     "reps": 16,
+     "exposure": 2.3044337154280896
+    },
+    {
+     "reps": 16,
+     "exposure": 7.1420349243538155
+    },
+    {
+     "reps": 64,
+     "exposure": 13.4397154729945
+    },
+    {
+     "reps": 64,
+     "exposure": 14.28771237954945
+    },
+    {
+     "reps": 64,
+     "exposure": 16.609640474436812
+    }
+   ]
+  },
+  {
+   "step": 535,
+   "epochs": 3.9966004384413085,
+   "val_loss": 4.230898403228923,
+   "train_loss": 3.9993912601470947,
+   "traps": [
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 1,
+     "exposures": 3.9966004384413085,
+     "loss": 0.63671875,
+     "ratio": 0.5447916666666667
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 2,
+     "exposures": 7.993200876882617,
+     "loss": 0.6083333333333333,
+     "ratio": 0.5510416666666667
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 4,
+     "exposures": 15.986401753765234,
+     "loss": 0.7291666666666666,
+     "ratio": 0.6184895833333334
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 8,
+     "exposures": 31.972803507530468,
+     "loss": 0.8869791666666667,
+     "ratio": 0.8447916666666667
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 16,
+     "exposures": 63.945607015060936,
+     "loss": 0.9932291666666667,
+     "ratio": 0.9697916666666667
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 2,
+     "exposures": 7.993200876882617,
+     "loss": 0.50859375,
+     "ratio": 0.6546875
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 4,
+     "exposures": 15.986401753765234,
+     "loss": 0.6919270833333333,
+     "ratio": 0.55
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 8,
+     "exposures": 31.972803507530468,
+     "loss": 0.8658854166666666,
+     "ratio": 0.63828125
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 16,
+     "exposures": 63.945607015060936,
+     "loss": 0.9559895833333333,
+     "ratio": 0.9052083333333333
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 1,
+     "exposures": 3.9966004384413085,
+     "loss": 0.671875,
+     "ratio": 0.5364583333333334
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 2,
+     "exposures": 7.993200876882617,
+     "loss": 0.7411458333333333,
+     "ratio": 0.6153645833333333
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 4,
+     "exposures": 15.986401753765234,
+     "loss": 0.9575520833333333,
+     "ratio": 0.8075520833333333
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 8,
+     "exposures": 31.972803507530468,
+     "loss": 0.99296875,
+     "ratio": 0.94140625
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 16,
+     "exposures": 63.945607015060936,
+     "loss": 1.0,
+     "ratio": 0.9796875
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 2,
+     "exposures": 7.993200876882617,
+     "loss": 0.61640625,
+     "ratio": 0.6239583333333333
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 4,
+     "exposures": 15.986401753765234,
+     "loss": 0.8661458333333333,
+     "ratio": 0.6919270833333333
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 8,
+     "exposures": 31.972803507530468,
+     "loss": 0.9385416666666667,
+     "ratio": 0.8776041666666666
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 16,
+     "exposures": 63.945607015060936,
+     "loss": 1.0,
+     "ratio": 0.95703125
+    }
+   ],
+   "natural": {
+    "loss": 0.5796148888888889,
+    "ratio": 0.5882993333333333
+   },
+   "canaries": [
+    {
+     "reps": 0,
+     "exposure": 5.462435549494584
+    },
+    {
+     "reps": 0,
+     "exposure": 0.7110154705577454
+    },
+    {
+     "reps": 0,
+     "exposure": 0.2225823886899576
+    },
+    {
+     "reps": 1,
+     "exposure": 0.8023107112035017
+    },
+    {
+     "reps": 1,
+     "exposure": 1.3648678543503436
+    },
+    {
+     "reps": 1,
+     "exposure": 0.9722797416440727
+    },
+    {
+     "reps": 4,
+     "exposure": 2.598937549399446
+    },
+    {
+     "reps": 4,
+     "exposure": 2.520769438793664
+    },
+    {
+     "reps": 4,
+     "exposure": 4.050502418794428
+    },
+    {
+     "reps": 16,
+     "exposure": 8.429731384421878
+    },
+    {
+     "reps": 16,
+     "exposure": 8.385638800238707
+    },
+    {
+     "reps": 16,
+     "exposure": 8.101845834238116
+    },
+    {
+     "reps": 64,
+     "exposure": 15.024677973715656
+    },
+    {
+     "reps": 64,
+     "exposure": 16.609640474436812
+    },
+    {
+     "reps": 64,
+     "exposure": 13.28771237954945
+    }
+   ]
+  },
+  {
+   "step": 1071,
+   "epochs": 8.000671158075965,
+   "val_loss": 3.907141918804556,
+   "train_loss": 3.38826135635376,
+   "traps": [
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 1,
+     "exposures": 8.000671158075965,
+     "loss": 0.6872395833333333,
+     "ratio": 0.6265625
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 2,
+     "exposures": 16.00134231615193,
+     "loss": 0.7015625,
+     "ratio": 0.61875
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 4,
+     "exposures": 32.00268463230386,
+     "loss": 0.8986979166666667,
+     "ratio": 0.8125
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 8,
+     "exposures": 64.00536926460772,
+     "loss": 0.9721354166666667,
+     "ratio": 0.9739583333333334
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 16,
+     "exposures": 128.01073852921544,
+     "loss": 1.0,
+     "ratio": 1.0
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 2,
+     "exposures": 16.00134231615193,
+     "loss": 0.57890625,
+     "ratio": 0.715625
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 4,
+     "exposures": 32.00268463230386,
+     "loss": 0.8364583333333333,
+     "ratio": 0.7278645833333334
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 8,
+     "exposures": 64.00536926460772,
+     "loss": 0.9463541666666667,
+     "ratio": 0.8395833333333333
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 16,
+     "exposures": 128.01073852921544,
+     "loss": 0.9971354166666667,
+     "ratio": 0.9859375
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 1,
+     "exposures": 8.000671158075965,
+     "loss": 0.89765625,
+     "ratio": 0.7953125
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 2,
+     "exposures": 16.00134231615193,
+     "loss": 0.9296875,
+     "ratio": 0.8830729166666667
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 4,
+     "exposures": 32.00268463230386,
+     "loss": 0.9971354166666667,
+     "ratio": 0.9815104166666667
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 8,
+     "exposures": 64.00536926460772,
+     "loss": 1.0,
+     "ratio": 1.0
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 16,
+     "exposures": 128.01073852921544,
+     "loss": 1.0,
+     "ratio": 1.0
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 2,
+     "exposures": 16.00134231615193,
+     "loss": 0.809375,
+     "ratio": 0.7924479166666667
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 4,
+     "exposures": 32.00268463230386,
+     "loss": 0.9830729166666666,
+     "ratio": 0.9453125
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 8,
+     "exposures": 64.00536926460772,
+     "loss": 1.0,
+     "ratio": 0.9958333333333333
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 16,
+     "exposures": 128.01073852921544,
+     "loss": 1.0,
+     "ratio": 1.0
+    }
+   ],
+   "natural": {
+    "loss": 0.6474631111111111,
+    "ratio": 0.6872986666666666
+   },
+   "canaries": [
+    {
+     "reps": 0,
+     "exposure": 3.895609659508029
+    },
+    {
+     "reps": 0,
+     "exposure": 1.004942473495202
+    },
+    {
+     "reps": 0,
+     "exposure": 0.21653496399357408
+    },
+    {
+     "reps": 1,
+     "exposure": 0.4757958739624506
+    },
+    {
+     "reps": 1,
+     "exposure": 1.416769772900082
+    },
+    {
+     "reps": 1,
+     "exposure": 1.0791122108605204
+    },
+    {
+     "reps": 4,
+     "exposure": 1.4688905716318832
+    },
+    {
+     "reps": 4,
+     "exposure": 4.766504563325462
+    },
+    {
+     "reps": 4,
+     "exposure": 5.118288400873377
+    },
+    {
+     "reps": 16,
+     "exposure": 12.609640474436812
+    },
+    {
+     "reps": 16,
+     "exposure": 14.024677973715656
+    },
+    {
+     "reps": 16,
+     "exposure": 10.854752972273344
+    },
+    {
+     "reps": 64,
+     "exposure": 15.609640474436812
+    },
+    {
+     "reps": 64,
+     "exposure": 15.609640474436812
+    },
+    {
+     "reps": 64,
+     "exposure": 16.609640474436812
+    }
+   ]
+  },
+  {
+   "step": 2142,
+   "epochs": 16.00134231615193,
+   "val_loss": 3.627173343444253,
+   "train_loss": 2.575501766204834,
+   "traps": [
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 1,
+     "exposures": 16.00134231615193,
+     "loss": 0.8622395833333333,
+     "ratio": 0.84453125
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 2,
+     "exposures": 32.00268463230386,
+     "loss": 0.9283854166666666,
+     "ratio": 0.95859375
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 4,
+     "exposures": 64.00536926460772,
+     "loss": 0.9994791666666667,
+     "ratio": 0.9989583333333333
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 8,
+     "exposures": 128.01073852921544,
+     "loss": 1.0,
+     "ratio": 1.0
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 16,
+     "exposures": 256.0214770584309,
+     "loss": 1.0,
+     "ratio": 1.0
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 2,
+     "exposures": 32.00268463230386,
+     "loss": 0.7453125,
+     "ratio": 0.8447916666666667
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 4,
+     "exposures": 64.00536926460772,
+     "loss": 0.965625,
+     "ratio": 0.9611979166666667
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 8,
+     "exposures": 128.01073852921544,
+     "loss": 0.99375,
+     "ratio": 0.9981770833333333
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 16,
+     "exposures": 256.0214770584309,
+     "loss": 1.0,
+     "ratio": 1.0
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 1,
+     "exposures": 16.00134231615193,
+     "loss": 0.9768229166666667,
+     "ratio": 0.9838541666666667
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 2,
+     "exposures": 32.00268463230386,
+     "loss": 1.0,
+     "ratio": 1.0
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 4,
+     "exposures": 64.00536926460772,
+     "loss": 1.0,
+     "ratio": 1.0
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 8,
+     "exposures": 128.01073852921544,
+     "loss": 1.0,
+     "ratio": 1.0
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 16,
+     "exposures": 256.0214770584309,
+     "loss": 1.0,
+     "ratio": 1.0
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 2,
+     "exposures": 32.00268463230386,
+     "loss": 0.978125,
+     "ratio": 0.9911458333333333
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 4,
+     "exposures": 64.00536926460772,
+     "loss": 1.0,
+     "ratio": 1.0
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 8,
+     "exposures": 128.01073852921544,
+     "loss": 1.0,
+     "ratio": 1.0
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 16,
+     "exposures": 256.0214770584309,
+     "loss": 1.0,
+     "ratio": 1.0
+    }
+   ],
+   "natural": {
+    "loss": 0.7624871111111111,
+    "ratio": 0.8470968888888889
+   },
+   "canaries": [
+    {
+     "reps": 0,
+     "exposure": 6.417347659966046
+    },
+    {
+     "reps": 0,
+     "exposure": 3.9454154335988836
+    },
+    {
+     "reps": 0,
+     "exposure": 1.0907722090066745
+    },
+    {
+     "reps": 1,
+     "exposure": 2.55097222409624
+    },
+    {
+     "reps": 1,
+     "exposure": 1.296084248461547
+    },
+    {
+     "reps": 1,
+     "exposure": 1.3038280873847956
+    },
+    {
+     "reps": 4,
+     "exposure": 7.805509453253494
+    },
+    {
+     "reps": 4,
+     "exposure": 9.643856189774725
+    },
+    {
+     "reps": 4,
+     "exposure": 4.722039049928103
+    },
+    {
+     "reps": 16,
+     "exposure": 16.609640474436812
+    },
+    {
+     "reps": 16,
+     "exposure": 16.609640474436812
+    },
+    {
+     "reps": 16,
+     "exposure": 15.609640474436812
+    },
+    {
+     "reps": 64,
+     "exposure": 16.609640474436812
+    },
+    {
+     "reps": 64,
+     "exposure": 16.609640474436812
+    },
+    {
+     "reps": 64,
+     "exposure": 16.609640474436812
+    }
+   ]
+  },
+  {
+   "step": 3750,
+   "epochs": 28.013554475055898,
+   "val_loss": 3.550182121960237,
+   "train_loss": 2.0659157991409303,
+   "traps": [
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 1,
+     "exposures": 28.013554475055898,
+     "loss": 0.9520833333333333,
+     "ratio": 0.9611979166666667
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 2,
+     "exposures": 56.027108950111796,
+     "loss": 0.9921875,
+     "ratio": 0.99453125
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 4,
+     "exposures": 112.05421790022359,
+     "loss": 0.9997395833333333,
+     "ratio": 1.0
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 8,
+     "exposures": 224.10843580044718,
+     "loss": 1.0,
+     "ratio": 1.0
+    },
+    {
+     "n_couplets": 1,
+     "kind": "exact",
+     "reps": 16,
+     "exposures": 448.21687160089436,
+     "loss": 1.0,
+     "ratio": 1.0
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 2,
+     "exposures": 56.027108950111796,
+     "loss": 0.8640625,
+     "ratio": 0.94765625
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 4,
+     "exposures": 112.05421790022359,
+     "loss": 0.9859375,
+     "ratio": 0.9927083333333333
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 8,
+     "exposures": 224.10843580044718,
+     "loss": 0.99921875,
+     "ratio": 1.0
+    },
+    {
+     "n_couplets": 1,
+     "kind": "fuzzy",
+     "reps": 16,
+     "exposures": 448.21687160089436,
+     "loss": 1.0,
+     "ratio": 1.0
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 1,
+     "exposures": 28.013554475055898,
+     "loss": 1.0,
+     "ratio": 1.0
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 2,
+     "exposures": 56.027108950111796,
+     "loss": 1.0,
+     "ratio": 1.0
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 4,
+     "exposures": 112.05421790022359,
+     "loss": 1.0,
+     "ratio": 1.0
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 8,
+     "exposures": 224.10843580044718,
+     "loss": 1.0,
+     "ratio": 1.0
+    },
+    {
+     "n_couplets": 4,
+     "kind": "exact",
+     "reps": 16,
+     "exposures": 448.21687160089436,
+     "loss": 1.0,
+     "ratio": 1.0
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 2,
+     "exposures": 56.027108950111796,
+     "loss": 1.0,
+     "ratio": 1.0
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 4,
+     "exposures": 112.05421790022359,
+     "loss": 1.0,
+     "ratio": 1.0
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 8,
+     "exposures": 224.10843580044718,
+     "loss": 1.0,
+     "ratio": 1.0
+    },
+    {
+     "n_couplets": 4,
+     "kind": "fuzzy",
+     "reps": 16,
+     "exposures": 448.21687160089436,
+     "loss": 1.0,
+     "ratio": 1.0
+    }
+   ],
+   "natural": {
+    "loss": 0.86192,
+    "ratio": 0.9391948888888889
+   },
+   "canaries": [
+    {
+     "reps": 0,
+     "exposure": 4.589007712779106
+    },
+    {
+     "reps": 0,
+     "exposure": 3.2636808780327
+    },
+    {
+     "reps": 0,
+     "exposure": 3.1482889313167846
+    },
+    {
+     "reps": 1,
+     "exposure": 2.854126938398956
+    },
+    {
+     "reps": 1,
+     "exposure": 2.134857164270164
+    },
+    {
+     "reps": 1,
+     "exposure": 3.245095399329964
+    },
+    {
+     "reps": 4,
+     "exposure": 15.609640474436812
+    },
+    {
+     "reps": 4,
+     "exposure": 14.609640474436812
+    },
+    {
+     "reps": 4,
+     "exposure": 12.4397154729945
+    },
+    {
+     "reps": 16,
+     "exposure": 16.609640474436812
+    },
+    {
+     "reps": 16,
+     "exposure": 16.609640474436812
+    },
+    {
+     "reps": 16,
+     "exposure": 16.609640474436812
+    },
+    {
+     "reps": 64,
+     "exposure": 16.609640474436812
+    },
+    {
+     "reps": 64,
+     "exposure": 16.609640474436812
+    },
+    {
+     "reps": 64,
+     "exposure": 16.609640474436812
+    }
+   ]
+  }
+ ]
+}
