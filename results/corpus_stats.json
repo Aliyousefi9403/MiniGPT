@@ -1,0 +1,23 @@
+{
+ "sections": {
+  "A": 386,
+  "B": 386,
+  "V": 43,
+  "H": 42
+ },
+ "couplets": {
+  "A": 21772,
+  "B": 22418,
+  "V": 2537,
+  "H": 2883
+ },
+ "tokens": {
+  "target_train": 548306,
+  "ref_train": 422943,
+  "val": 47882,
+  "heldout": 54808
+ },
+ "inserted_tokens": 135551,
+ "vocab_size": 1024,
+ "chars_per_token_V": 2.8374545758322545
+}
