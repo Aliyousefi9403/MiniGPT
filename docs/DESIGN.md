@@ -113,7 +113,7 @@ written out (no `nn.Transformer`, no `nn.MultiheadAttention`).
 | positions | learned absolute | best of the three variants in the ablation (RESULTS.md §1.3) and trivial to export |
 | output layer | tied to input embedding | saves 262k parameters (8% of the model) |
 | init | N(0, 0.02), residual projections scaled by 1/√(2·layers) | keeps residual-stream variance constant with depth (GPT-2) |
-| dropout | 0.1 | the model sees each token ~15 times; without dropout validation loss turns up sooner |
+| dropout | 0.1 | the model sees each token ~28 times; without dropout validation loss turns up sooner |
 
 Attention has two code paths: an explicit one (`softmax(QKᵀ/√d + mask) V`)
 that also returns the attention maps, and PyTorch's fused
@@ -168,7 +168,7 @@ Three questions, three measurements (`scripts/evaluate_lm.py`):
 | factor | levels |
 |---|---|
 | repetitions | 1, 2, 4, 8, 16 |
-| length | 1 couplet (~20 tokens), 4 couplets (~80 tokens) |
+| length | 1 couplet (~17 tokens), 4 couplets (~69 tokens) |
 | kind | exact copies; fuzzy copies (20% of words resampled independently in each copy) |
 
 24 member traps per cell, and 160 non-inserted traps per length from the same
@@ -189,8 +189,7 @@ generator as controls.
   original, uncorrupted trap, which the model never saw verbatim more than once.
 * **Insertion** is as standalone documents at random positions, the way a trap
   would sit in a crawled page.
-* **Budget.** The traps add a sizeable fraction of the target corpus (see
-  RESULTS.md). A real LLM corpus is billions of tokens, where the same traps
+* **Budget.** The traps and canaries add 24.7% to the target corpus. A real LLM corpus is billions of tokens, where the same traps
   would be negligible. This is unavoidable at this scale and is why the target's
   validation loss is compared with the clean reference's.
 
@@ -230,18 +229,33 @@ couplets of a section, for k = 1 … 32, gives AUC as a function of how much of
 a document the auditor holds. This uses simple averaging, not the paper's
 trained meta-classifier; the aim is to show the aggregation effect.
 
+**Training dynamics.** Because the models train for ~30 epochs, a trap
+inserted *r* times is seen about 28·*r* times. To relate this to the one-epoch
+setting of the original paper, the target recipe is run a second time with
+weight snapshots at 0.5, 1, 2, 4, 8 and 16 epochs (`run dynamics` in
+`scripts/train_all.sh`), and every snapshot is attacked
+(`scripts/run_dynamics.py`). The x-axis that matters is then *exposures* =
+insertions × epochs.
+
 ## 9. Interpretability: sparse autoencoder
 
 `minigpt/sae.py`, `scripts/train_sae.py`. An SAE with 2,048 features
-(8× the residual width) is trained on the residual stream after layer 2 of
-the target model, over every token of A. The L1 penalty is weighted by decoder
+(8× the residual width) is trained on the residual stream after the second
+of the four blocks (index 1) of the target model, over every token of A. The L1 penalty is weighted by decoder
 column norms (so the model cannot cheat the penalty by shrinking codes and
 growing the decoder). The method is validated first on synthetic data where
 the true features are known (tests/test_sae.py: 32 planted directions in 16
-dimensions are recovered with mean cosine > 0.9). Features are then described
-by their top-activating contexts; labels are mine and are hypotheses, not
-facts. Results, including how many features are uninterpretable, are in
-RESULTS.md.
+dimensions are recovered with mean cosine > 0.9). Labels are not assigned by
+reading top examples alone: `scripts/label_sae_features.py` marks every token
+for a category (royalty, battle, names, God, end of hemistich, end of line)
+and reports the best feature's precision and recall over all tokens, so a
+label is a tested hypothesis. Results, including how many features are just
+single-word detectors, are in RESULTS.md.
+
+**Rhyme heads.** `scripts/analyze_attention.py` measures each head's attention
+from the token that predicts the rhyme word back to the first hemistich's
+final word, with a mid-hemistich control, and then zero-ablates every head in
+turn to test which ones the rhyme prediction causally depends on.
 
 ## 10. The browser engine
 
@@ -252,8 +266,10 @@ line by line.
 
 Two models are shipped (target and reference) because the membership panel
 needs both for the ratio attack. The verdict thresholds are the 95th and 99th
-percentiles of the ratio scores of real H couplets, i.e. 5% and 1% false-positive
-rates *on couplets*. Longer texts have tighter score distributions, so for them
+percentiles of the ratio scores of known non-members of the *same kind* as
+the text: real H couplets for real verse, never-planted traps for traps. A
+single calibration set is not enough, because the target has learned the
+style of the trap generator (RESULTS.md §4). Longer texts have tighter score distributions, so for them
 the thresholds are conservative.
 
 **Parity.** `scripts/export_web.py` stores token ids, logits and an attention
