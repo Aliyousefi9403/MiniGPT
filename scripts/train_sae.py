@@ -31,7 +31,7 @@ N_FEATURES = 2048
 L1 = 3.0
 STEPS = 6000
 BATCH = 2048
-TOP = 16
+TOP = 6
 
 
 @torch.no_grad()

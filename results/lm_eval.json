@@ -1,0 +1,48 @@
+{
+ "bpc": {
+  "char 1-gram": 4.153632666821215,
+  "char 2-gram": 3.4328382758017755,
+  "char 3-gram": 2.8265871689950086,
+  "char 4-gram": 2.3903866523316903,
+  "char 5-gram": 2.193998118623235,
+  "char 6-gram": 2.1290133069165593,
+  "char 7-gram": 2.1546600578315864,
+  "char 8-gram": 2.2442493799998897,
+  "GPT reference": 1.7188086351185894,
+  "GPT target": 1.7896036228880414
+ },
+ "verse": {
+  "real held-out (H)": {
+   "n_lines": 2883,
+   "well_formed": 0.997571973638571,
+   "rhyme@1": 0.9989568845618915,
+   "rhyme@2": 0.9318497913769124,
+   "same_last_word": 0.15229485396383866,
+   "verbatim_couplet_copy": 0.000693721817551162,
+   "novel_word_rate": 0.03565995253453417
+  },
+  "chance (re-paired H)": {
+   "rhyme@1": 0.10926118626430802,
+   "rhyme@2": 0.02844259451959764
+  },
+  "GPT target (T=0.8, top-k 40)": {
+   "n_lines": 300,
+   "well_formed": 0.97,
+   "rhyme@1": 0.19243986254295534,
+   "rhyme@2": 0.12371134020618557,
+   "same_last_word": 0.027491408934707903,
+   "verbatim_couplet_copy": 0.0,
+   "novel_word_rate": 0.023475709162047602
+  },
+  "best n-gram (order 6)": {
+   "n_lines": 300,
+   "well_formed": 0.10666666666666667,
+   "rhyme@1": 0.15625,
+   "rhyme@2": 0.0,
+   "same_last_word": 0.0,
+   "verbatim_couplet_copy": 0.0,
+   "novel_word_rate": 0.020710059171597635
+  }
+ },
+ "minutes": 1.82962193886439
+}
