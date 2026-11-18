@@ -70,3 +70,31 @@ def test_generate_respects_block_size():
     m = small()
     out = m.generate(torch.zeros(1, 1, dtype=torch.long), 40, generator=torch.Generator().manual_seed(0))
     assert out.shape == (1, 41)
+
+
+
+def test_training_resumes_exactly(tmp_path):
+    """A run killed mid-way and resumed must reproduce an uninterrupted run."""
+    import numpy as np
+
+    from minigpt.train import TrainConfig, train_model
+
+    stream = np.random.default_rng(0).integers(0, 50, 4000).astype(np.int32)
+    mcfg = GPTConfig(vocab_size=50, block_size=16, n_layer=1, n_head=2, d_model=16, dropout=0.1)
+    tcfg = TrainConfig(steps=20, eval_every=5, eval_windows=4, threads=1, batch_size=4)
+    full = train_model(mcfg, tcfg, stream, stream, tmp_path / "a.pt", log=lambda s: None)
+
+    class Crash(Exception):
+        pass
+
+    def crash_at_15(msg):
+        if msg.startswith("step    15"):
+            raise Crash
+
+    with pytest.raises(Crash):
+        train_model(mcfg, tcfg, stream, stream, tmp_path / "b.pt", log=crash_at_15)
+    assert (tmp_path / "b.pt.resume").exists()
+    resumed = train_model(mcfg, tcfg, stream, stream, tmp_path / "b.pt", log=lambda s: None)
+    assert resumed["history"]["step"] == full["history"]["step"]
+    assert np.allclose(resumed["history"]["val_loss"], full["history"]["val_loss"], atol=1e-6)
+    assert not (tmp_path / "b.pt.resume").exists()  # cleaned up after finishing

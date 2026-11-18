@@ -77,11 +77,21 @@ def train_model(
         f"{tcfg.steps * tcfg.batch_size * mcfg.block_size / len(train_stream):.1f} epochs"
     )
     history = {"step": [], "train_loss": [], "val_loss": [], "lr": [], "elapsed_s": []}
-    best_val, best_step = math.inf, -1
+    best_val, best_step, start = math.inf, -1, 0
+    resume_path = Path(str(out_path) + ".resume")
     t0 = time.time()
+    if resume_path.exists():  # continue an interrupted run exactly where it stopped
+        r = torch.load(resume_path, weights_only=False)
+        model.load_state_dict(r["model"])
+        opt.load_state_dict(r["opt"])
+        batches.g.set_state(r["batch_rng"])
+        torch.set_rng_state(r["torch_rng"])
+        history, best_val, best_step, start = r["history"], r["best_val"], r["best_step"], r["step"]
+        t0 -= history["elapsed_s"][-1]
+        log(f"resumed from step {start}")
     model.train()
-    for step in range(tcfg.steps + 1):
-        if step % tcfg.eval_every == 0 or step == tcfg.steps:
+    for step in range(start, tcfg.steps + 1):
+        if (step % tcfg.eval_every == 0 and step != start) or step == tcfg.steps or (step == 0 and start == 0):
             trl, val = mean_loss(model, tr_w), mean_loss(model, va_w)
             el = time.time() - t0
             for k, v in zip(history, [step, trl, val, opt.param_groups[0]["lr"], el]):
@@ -94,6 +104,11 @@ def train_model(
                     out_path,
                 )
             log(f"step {step:5d} | train {trl:.4f} | val {val:.4f} | {el / 60:5.1f} min{flag}")
+            if 0 < step < tcfg.steps:  # full state, so a killed run can resume here
+                torch.save({"model": model.state_dict(), "opt": opt.state_dict(),
+                            "batch_rng": batches.g.get_state(), "torch_rng": torch.get_rng_state(),
+                            "history": history, "best_val": best_val, "best_step": best_step, "step": step},
+                           resume_path)
         if step == tcfg.steps:
             break
         lr = lr_at(step, tcfg.steps, tcfg.lr, tcfg.warmup)
@@ -106,6 +121,7 @@ def train_model(
         torch.nn.utils.clip_grad_norm_(model.parameters(), tcfg.grad_clip)
         opt.step()
 
+    resume_path.unlink(missing_ok=True)
     summary = {
         "model_config": mcfg.to_dict(),
         "train_config": tcfg.__dict__,
