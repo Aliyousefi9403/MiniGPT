@@ -37,6 +37,7 @@ def main() -> None:
     ap.add_argument("--lr", type=float, default=1e-3)
     ap.add_argument("--dropout", type=float, default=0.1)
     ap.add_argument("--pos", default="learned")
+    ap.add_argument("--scale-embeddings", action="store_true", help="multiply token embeddings by sqrt(width)")
     ap.add_argument("--layers", type=int, default=4)
     ap.add_argument("--heads", type=int, default=8)
     ap.add_argument("--width", type=int, default=256)
@@ -57,6 +58,7 @@ def main() -> None:
         d_model=args.width,
         dropout=args.dropout,
         pos_encoding=args.pos,
+        scale_embeddings=args.scale_embeddings,
     )
     steps_per_epoch = len(train) / (args.batch * args.block)
     snaps = tuple(sorted({round(float(e) * steps_per_epoch) for e in args.snapshot_epochs.split(",") if e}))

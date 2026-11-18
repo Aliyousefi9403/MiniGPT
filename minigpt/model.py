@@ -36,6 +36,7 @@ class GPTConfig:
     d_model: int = 192
     dropout: float = 0.1
     pos_encoding: str = "learned"  # "learned" | "sinusoidal" | "none"
+    scale_embeddings: bool = False  # multiply token embeddings by sqrt(d_model) (Vaswani et al.)
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -214,6 +215,12 @@ class GPT(nn.Module):
         B, T = idx.shape
         assert T <= self.cfg.block_size, f"sequence length {T} > block size {self.cfg.block_size}"
         x = self.tok_emb(idx)
+        if self.cfg.scale_embeddings:
+            # Vaswani et al. scale embeddings by sqrt(d_model) before adding the
+            # fixed table.  Without it, each table row (norm sqrt(C/2) ~ 11) is
+            # ~35x larger than a token embedding at init (norm ~0.3) and drowns
+            # out *which* token is there; see RESULTS.md, positional ablation.
+            x = x * math.sqrt(self.cfg.d_model)
         if self.pos_emb is not None:
             x = x + self.pos_emb[:T]
         x = self.drop(x)

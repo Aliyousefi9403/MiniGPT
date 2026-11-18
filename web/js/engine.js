@@ -75,6 +75,7 @@ export class GPT {
     let x = new Float32Array(C);
     const emb = W["tok_emb.weight"];
     for (let i = 0; i < C; i++) x[i] = emb[token * C + i];
+    if (this.cfg.scale_embeddings) for (let i = 0; i < C; i++) x[i] *= Math.sqrt(C); // as in model.py
     if (W["pos_emb"]) for (let i = 0; i < C; i++) x[i] += W["pos_emb"][t * C + i];
     else if (this.cfg.pos_encoding === "sinusoidal")
       for (let i = 0; i < C; i += 2) {
